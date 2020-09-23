@@ -6,7 +6,7 @@ import click
 
 class Blockchain:
 
-    difficulty = 3
+    difficulty = 4
 
     def __init__(self, pending_transactions, blocks):
         self.pending_transactions = pending_transactions
@@ -75,17 +75,14 @@ class Blockchain:
                 pending_transaction = Transaction(pending_transaction['sender'], pending_transaction['receiver'], float(pending_transaction['amount']))
                 self.pending_transactions.append(pending_transaction)
 
-            index = 0
             for block in data['blocks']:
                 transactions = []
 
                 for transaction in block['transactions']:
                     transactions.append(Transaction(transaction['sender'], transaction['receiver'], float(transaction['amount'])))
 
-                block = Block(index, transactions, block['timestamp'], block['previous_hash'], block['nonce'])
+                block = Block(block['index'], transactions, block['timestamp'], block['previous_hash'], block['nonce'])
                 self.blocks.append(block)
-
-                index += 1
 
 
 class Block:
@@ -157,17 +154,29 @@ def verify_integrity():
     x = 0
     total_blocks = len(chain.blocks)
     while x < total_blocks:
-        x += 1
+        current_block = chain.blocks[x]
 
-        if x == 1:
+        if current_block.index == 0:
+            x += 1
             continue
 
         previous_block = chain.blocks[x - 1]
-        current_block = chain.blocks[x]
 
-        if previous_block.hash() == current_block.previous_hash:
-            click.echo("Integrity problem at block " + str(x))
+        if not current_block.hash().startswith('0' * Blockchain.difficulty):
+            click.echo('Integrity problem at block ' + str(x))
             return
+
+        if (x + 1) == total_blocks:
+            return
+
+        if previous_block.hash() != current_block.previous_hash:
+            click.echo('Integrity problem at block ' + str(x + 1))
+            return
+
+        x += 1
+
+    click.echo('Blockchain integrity checked!')
+    click.echo('No integrity problems found')
 
 
 cli.add_command(reset)

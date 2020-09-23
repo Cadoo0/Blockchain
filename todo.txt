@@ -1,0 +1,1 @@
+Functie om blockchain integriteit te checken toevoegen
