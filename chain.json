@@ -1,1 +1,53 @@
-{"pending_transactions": [], "blocks": [{"index": 0, "transactions": [], "timestamp": 1600881604.9342103, "previous_hash": "0", "nonce": 22133}]}
+{
+  "pending_transactions": [],
+  "blocks": [
+    {
+      "index": 0,
+      "transactions": [],
+      "timestamp": 1600880479.054612,
+      "previous_hash": "0",
+      "nonce": 33197
+    },
+    {
+      "index": 1,
+      "transactions": [
+        {
+          "sender": "Ricardo",
+          "receiver": "Thimo",
+          "amount": 100.0
+        },
+        {
+          "sender": "Sara",
+          "receiver": "Isabel",
+          "amount": 12.25
+        },
+        {
+          "sender": "Isabel",
+          "receiver": "Ricardo",
+          "amount": 50.0
+        }
+      ],
+      "timestamp": 1600880510.5488234,
+      "previous_hash": "00009f920e00235fb02e5e31c385f923362c8ad7c25425c8ac7bebab2f2c381f",
+      "nonce": 51229
+    },
+    {
+      "index": 2,
+      "transactions": [
+        {
+          "sender": "Ricardo",
+          "receiver": "Sara",
+          "amount": 20.0
+        },
+        {
+          "sender": "Rika",
+          "receiver": "Bas",
+          "amount": 25.5
+        }
+      ],
+      "timestamp": 1600880537.4797065,
+      "previous_hash": "0000c42f14a8a04832b4df855f0b27a78d6befda37823737bb9f55aced6d7a34",
+      "nonce": 41332
+    }
+  ]
+}

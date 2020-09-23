@@ -170,12 +170,39 @@ def verify_integrity():
             return
 
         if previous_block.hash() != current_block.previous_hash:
-            click.echo('Integrity problem at block ' + str(x + 1))
+            click.echo('Integrity problem at block ' + str(x))
             return
 
         x += 1
 
-    click.echo('Blockchain integrity checked!')
+    click.echo('No integrity problems found')
+
+
+@click.command()
+@click.option('--index', help='The block you want to check', prompt='Block index', type=click.INT)
+def verify_integrity_of_block(index):
+    chain = Blockchain([], [])
+    chain.load_from_disk()
+
+    if index == 0:
+        click.echo('Cannot check the first block')
+        return
+
+    try:
+        current_block = chain.blocks[index]
+        previous_block = chain.blocks[index - 1]
+    except IndexError:
+        click.echo('Block index ' + str(index) + ' does not exist')
+        return
+
+    if not current_block.hash().startswith('0' * Blockchain.difficulty):
+        click.echo('Integrity problem at block ' + str(x))
+        return
+
+    if previous_block.hash() != current_block.previous_hash:
+        click.echo('Integrity problem at block ' + str(x))
+        return
+
     click.echo('No integrity problems found')
 
 
@@ -183,6 +210,7 @@ cli.add_command(reset)
 cli.add_command(add_pending_transaction)
 cli.add_command(create_block)
 cli.add_command(verify_integrity)
+cli.add_command(verify_integrity_of_block)
 
 
 if __name__ == '__main__':
